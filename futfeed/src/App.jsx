@@ -2,11 +2,12 @@ import './App.css'
 
 import { useEffect, useState } from 'react'
 import { Header } from './components/Header'
+import { Feed } from './components/Feed'
 
 function App() {
 
   const [league, setLeague] = useState('brasileirao')
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTeam] = useState('')
 
   useEffect(() => {
     if(league === 'brasileirao'){
@@ -23,8 +24,10 @@ function App() {
       league={league} 
       setLeague={setLeague} 
       searchTerm={searchTerm}
-      setSearchTerm={setSearchTerm}
+      setSearchTerm={setSearchTeam}
       />
+
+      <Feed league={league} searchTeam={searchTerm}/>
     </div>
   )
 }
