@@ -19,5 +19,5 @@ export const mockNews = [
     league: 'premier',
     category: 'Pós-jogo',
     time: 'Há 5 horas'
-  }
+  },
 ]

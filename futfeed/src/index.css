@@ -6,7 +6,7 @@
 :root {
   --bg-main: #0b132b;
   --bg-card: #1c2541;
-  --brand: #00ff87;
+  --brand: #00ff88b8;
   --text-main: #ffffff;
   --text-muted: #a0aec0;
 }
@@ -15,7 +15,7 @@
 [data-league="premier"] {
   --bg-main: #130014;
   --bg-card: #240025;
-  --brand: #00ff87;
+  --brand: #af00b9;
 }
 
 /* Champions League */
