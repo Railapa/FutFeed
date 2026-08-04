@@ -10,24 +10,32 @@ export const Header = ({ league, setLeague, searchTerm, setSearchTerm }) => {
     ]
 
   return (
-    <header className="bg-bg-card border-b border-text-muted/10 p-4 flex items-center justify-between">
-        <h1 className="text-brand text-xl font-bold">FutFeed</h1>
+    <header className="bg-bg-card border-b border-text-muted/10 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        
+        <div className="flex items-center justify-between sm:contents">
+          <h1 className="text-brand text-xl font-bold">FutFeed</h1>
 
-        <input 
-        type="text"
-        className="bg-bg-main text-text-main rounded-lg p-2 text-sm w-3/12"
-        placeholder="Buscar times, notícias..."
-        onChange={e => setSearchTerm(e.target.value)}
-        value={searchTerm}
-         />
-
-         <select value={league} onChange={e => setLeague(e.target.value)} className="w-2/12 bg-bg-main text-sm p-2 rounded-lg">
+          <select 
+            value={league} 
+            onChange={e => setLeague(e.target.value)} 
+            className="bg-bg-main text-sm p-2 rounded-lg w-auto sm:w-48 text-text-main border border-text-muted/10 sm:order-last"
+          >
             {leagues.map((item) => (
                 <option key={item.id} value={item.id}>
                     {item.label}
                 </option>
             ))}
-         </select>
+          </select>
+        </div>
+
+        <input 
+          type="text"
+          className="bg-bg-main text-text-main rounded-lg p-2 text-sm w-full sm:max-w-md border border-text-muted/10"
+          placeholder="Buscar times, notícias..."
+          onChange={e => setSearchTerm(e.target.value)}
+          value={searchTerm}
+        />
+
     </header>
   )
 }

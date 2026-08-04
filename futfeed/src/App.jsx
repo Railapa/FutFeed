@@ -7,7 +7,9 @@ import { Matches } from './components/Matches/Matches'
 
 function App() {
 
-  const [league, setLeague] = useState('brasileirao')
+  const [league, setLeague] = useState(() => {
+    return localStorage.getItem('league') || 'brasileirao'
+  })
   const [searchTerm, setSearchTeam] = useState('')
 
   useEffect(() => {
@@ -16,8 +18,9 @@ function App() {
     } else {
       document.documentElement.setAttribute('data-league', league)
     }
-  }, [league])
 
+    localStorage.setItem('league', league)
+  }, [league])
 
   return (
     <div className="min-h-screen bg-bg-main text-text-main transition-colors duration-300">
