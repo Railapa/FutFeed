@@ -50,20 +50,19 @@ export const Feed = ({ league, searchTeam }) => {
           <button
             key={btn}
             onClick={() => setSelectedCategory(btn)}
-            className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all shrink-0 whitespace-nowrap cursor-pointer ${
-              btn === selectedCategory
+            className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all shrink-0 whitespace-nowrap cursor-pointer ${btn === selectedCategory
                 ? 'bg-[var(--brand)] text-[var(--bg-main)] font-bold'
                 : 'bg-transparent text-text-muted hover:text-white'
-            }`}
+              }`}
           >
-            {btn}
+            {btn === 'Salvas' ? `${btn} (${favorites.length})` : (btn)}
           </button>
         ))}
       </div>
 
       {filteredNews.length === 0 ? (
         <div className="text-center py-10 bg-bg-card/40 rounded-xl border border-text-muted/10">
-          <p className="text-sm text-text-muted">Nenhuma notícia encontrada para essa busca.</p>
+          <p className="text-sm text-text-muted"> {selectedCategory === 'Salvas' ? 'Você ainda não salvou nenhuma notícia.' : 'Nenhuma notícia encontrada para essa busca.'}</p>
         </div>
       ) : (
         filteredNews.map(noticia => (
@@ -79,7 +78,7 @@ export const Feed = ({ league, searchTeam }) => {
 
               <button
                 onClick={(e) => {
-                  e.stopPropagation() 
+                  e.stopPropagation()
                   toggleFavorite(noticia.id)
                 }}
                 className="p-1 cursor-pointer transition-colors"
@@ -87,16 +86,15 @@ export const Feed = ({ league, searchTeam }) => {
               >
                 <FontAwesomeIcon
                   icon={faBookmark}
-                  className={`text-sm transition-colors ${
-                    favorites.includes(noticia.id)
+                  className={`text-sm transition-colors ${favorites.includes(noticia.id)
                       ? 'text-[var(--brand)]'
                       : 'text-text-muted/30 hover:text-text-muted'
-                  }`}
+                    }`}
                 />
+
               </button>
             </div>
 
-            {/* Título e Rodapé */}
             <h3 className="text-sm sm:text-base font-bold mt-1 text-text-main">
               {noticia.title}
             </h3>

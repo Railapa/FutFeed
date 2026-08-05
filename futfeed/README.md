@@ -1,16 +1,29 @@
-# React + Vite
+# ⚽ FutFeed
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação web moderna e responsiva para acompanhar partidas de futebol ao vivo, resultados e as principais notícias do mundo da bola.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologias Utilizadas
 
-## React Compiler
+- **React** (Vite)
+- **Tailwind CSS** (Estilização e Responsividade)
+- **FontAwesome** (Ícones)
+- **LocalStorage** (Persistência da liga preferida e notícias salvas)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Funcionalidades
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🏆 **Seletor de Ligas:** Filtre partidas e notícias por ligas (Brasileirão, Premier League, etc.).
+- 🔍 **Barra de Pesquisa:** Busque notícias ou times em tempo real.
+- ⭐ **Favoritos / Salvas:** Guarde suas notícias preferidas para ler depois (salvo no seu navegador).
+- 📱 **Totalmente Responsivo:** Layout adaptado para celulares, tablets e computadores.
+
+---
+
+## 🔧 Como Executar o Projeto Localmente
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/SEU-USUARIO/futfeed.git

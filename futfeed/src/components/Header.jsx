@@ -10,7 +10,7 @@ export const Header = ({ league, setLeague, searchTerm, setSearchTerm }) => {
     ]
 
   return (
-    <header className="bg-bg-card border-b border-text-muted/10 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <header className="bg-bg-card  border-text-muted/10 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         
         <div className="flex items-center justify-between sm:contents">
           <h1 className="text-brand text-xl font-bold">FutFeed</h1>

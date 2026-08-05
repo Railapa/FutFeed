@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Header } from './components/Header'
 import { Feed } from './components/Feed'
 import { Matches } from './components/Matches/Matches'
+import { Footer } from './components/Footer/Footer'
 
 function App() {
 
@@ -34,6 +35,8 @@ function App() {
       <Matches league={league}/>
 
       <Feed league={league} searchTeam={searchTerm} />
+
+      <Footer/>
     </div>
   )
 }
