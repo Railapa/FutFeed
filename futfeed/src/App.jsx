@@ -5,6 +5,7 @@ import { Header } from './components/Header'
 import { Feed } from './components/Feed'
 import { Matches } from './components/Matches/Matches'
 import { Footer } from './components/Footer/Footer'
+import { Standings } from './components/Standings/Standings'
 
 function App() {
 
@@ -32,11 +33,19 @@ function App() {
         setSearchTerm={setSearchTeam}
       />
 
-      <Matches league={league}/>
+      <Matches league={league} />
 
-      <Feed league={league} searchTeam={searchTerm} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <Feed league={league} searchTeam={searchTerm} />
+        </div>
 
-      <Footer/>
+        <aside className="lg:col-span-1 flex flex-col gap-4">
+           <Standings league={league} /> 
+        </aside>
+      </div>
+
+      <Footer />
     </div>
   )
 }

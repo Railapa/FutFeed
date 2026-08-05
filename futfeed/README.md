@@ -1,5 +1,7 @@
 # ⚽ FutFeed
 
+> 🔗 **Link do Projeto Rodando:** [https://fut-feed.vercel.app/](https://fut-feed.vercel.app/)
+
 Uma aplicação web moderna e responsiva para acompanhar partidas de futebol ao vivo, resultados e as principais notícias do mundo da bola.
 
 ---
