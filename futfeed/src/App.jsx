@@ -6,6 +6,7 @@ import { Feed } from './components/Feed'
 import { Matches } from './components/Matches/Matches'
 import { Footer } from './components/Footer/Footer'
 import { Standings } from './components/Standings/Standings'
+import { MyTeam } from './components/MyTeam/MyTeam'
 
 function App() {
 
@@ -33,16 +34,22 @@ function App() {
         setSearchTerm={setSearchTeam}
       />
 
-      <Matches league={league} />
+      <div className="max-w-[1380px] mx-auto px-4 sm:px-6 py-5">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <Feed league={league} searchTeam={searchTerm} />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5 items-start">
+
+          <div className="flex flex-col gap-5">
+            <Matches league={league} />
+            <Feed league={league} searchTeam={searchTerm} />
+          </div>
+
+          <aside className="flex flex-col gap-4 sticky top-4">
+            <Standings league={league} />
+            <MyTeam />
+          </aside>
+
         </div>
 
-        <aside className="lg:col-span-1 flex flex-col gap-4">
-           <Standings league={league} /> 
-        </aside>
       </div>
 
       <Footer />

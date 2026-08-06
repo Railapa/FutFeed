@@ -4,7 +4,7 @@ export const Matches = ({ league }) => {
     const filteredMatches = mockMatches.filter(m => m.league === league)
 
     return (
-        <section className="max-w-4xl mx-auto px-4 sm:px-6 mt-4">
+        <section className="w-full">
             <h2 className="text-xs font-bold text-text-muted mb-3 uppercase tracking-wider">Partidas de Hoje</h2>
 
             <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-2 scrollbar-none">
@@ -14,7 +14,7 @@ export const Matches = ({ league }) => {
                     filteredMatches.map(matches => (
                         <div
                             key={matches.id}
-                            className="min-w-[210px] sm:min-w-[240px] bg-[var(--bg-card)] p-3.5 sm:p-4 rounded-2xl border border-text-muted/10 flex flex-col gap-3 shrink-0"
+                            className="min-w-[210px] sm:min-w-[240px] bg-[var(--bg-card)] p-3.5 sm:p-4 rounded-2xl ring-1 ring-white/5 flex flex-col gap-3 shrink-0"
                         >
                             <div className="flex justify-between items-center">
                                 <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider">
