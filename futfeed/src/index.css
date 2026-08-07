@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tema padrão / Brasileirão Série A */
 :root {
   --bg-main: #0b132b;
   --bg-card: #1c2541;
@@ -11,35 +10,30 @@
   --text-muted: #a0aec0;
 }
 
-/* Premier League */
 [data-league="premier"] {
   --bg-main: #130014;
   --bg-card: #240025;
   --brand: #af00b9;
 }
 
-/* Champions League */
 [data-league="champions"] {
   --bg-main: #050b1e;
   --bg-card: #0d1b3e;
   --brand: #1886e0;
 }
 
-/* La Liga (NOVO) */
 [data-league="laliga"] {
   --bg-main: #121212;
   --bg-card: #1e1e1e;
   --brand: #ff4b4b;
 }
 
-/* Copa Libertadores (NOVO) */
 [data-league="libertadores"] {
   --bg-main: #1a150e;
   --bg-card: #2a2216;
   --brand: #f59e0b;
 }
 
-/* Brasileirão Série B (NOVO) */
 [data-league="brasileiraoB"] {
   --bg-main: #061a12;
   --bg-card: #0d2d20;

@@ -45,7 +45,7 @@ export const Feed = ({ league, searchTeam }) => {
   return (
     <div className="flex flex-col gap-4">
 
-      <div className="flex gap-1.5 bg-bg-card p-1 rounded-xl overflow-x-auto scrollbar-none">
+      <div className="flex gap-1.5 bg-bg-card p-1 rounded-xl overflow-x-auto scrollbar-none h-10">
         {categories.map(btn => (
           <button
             key={btn}
@@ -53,7 +53,7 @@ export const Feed = ({ league, searchTeam }) => {
             className={`px-3 py-1 rounded-lg text-xs font-medium transition-all shrink-0 whitespace-nowrap cursor-pointer ${
               btn === selectedCategory
                 ? 'bg-[var(--brand)] text-[var(--bg-main)] font-bold'
-                : 'bg-transparent text-text-muted hover:text-white'
+                : 'bg-transparent text-text-muted hover:text-white hover:bg-bg-main'
             }`}
           >
             {btn === 'Salvas' ? `${btn} (${favorites.length})` : btn}

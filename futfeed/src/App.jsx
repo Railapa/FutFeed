@@ -34,12 +34,13 @@ function App() {
         setSearchTerm={setSearchTeam}
       />
 
-      <div className="max-w-[1380px] mx-auto px-4 sm:px-6 py-5">
+      <div className="max-w-[1380px] mx-auto px-4 sm:px-6 py-5 flex flex-col gap-5">
+
+        <Matches league={league} />
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5 items-start">
-
-          <div className="flex flex-col gap-5">
-            <Matches league={league} />
+          
+          <div>
             <Feed league={league} searchTeam={searchTerm} />
           </div>
 
