@@ -25,6 +25,14 @@ function App() {
     localStorage.setItem('league', league)
   }, [league])
 
+  const [myTeamId, setMyTeamId] = useState(() => {
+    localStorage.getItem('futfeed_myteam') || 'VIT'
+  })
+
+  useEffect(() => {
+    localStorage.setItem('futfeed_myteam', myTeamId)
+  }, [myTeamId])
+
   return (
     <div className="min-h-screen bg-bg-main text-text-main transition-colors duration-300">
       <Header
@@ -46,7 +54,7 @@ function App() {
 
           <aside className="flex flex-col gap-4 sticky top-4">
             <Standings league={league} />
-            <MyTeam />
+            <MyTeam myTeamId={myTeamId} setMyTeamId={setMyTeamId} />
           </aside>
 
         </div>
