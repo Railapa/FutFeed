@@ -21,6 +21,7 @@ Uma aplicação web moderna e responsiva para acompanhar partidas de futebol ao 
 - 🔍 **Barra de Pesquisa:** Busque notícias ou times em tempo real.
 - ⭐ **Favoritos / Salvas:** Guarde suas notícias preferidas para ler depois (salvo no seu navegador).
 - 📱 **Totalmente Responsivo:** Layout adaptado para celulares, tablets e computadores.
+- ❤️ **Time do Coração Dinâmico:** Escolha seu time preferido na sidebar para acompanhar partidas, status e notícias exclusivas (salvo no LocalStorage).
 
 ---
 

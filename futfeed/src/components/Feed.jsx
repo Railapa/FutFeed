@@ -5,6 +5,17 @@ import { Modal } from "./Modal/Modal"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faRotateRight } from '@fortawesome/free-solid-svg-icons'
 
+const API_KEY = import.meta.env.VITE_GNEWS_API_KEY
+
+const leagueQueries = {
+  'Brasileirão Série A': 'Brasileirão OR "Série A"',
+  'Champions League': '"Champions League"',
+  'Premier League': '"Premier League"',
+  'La Liga': '"La Liga"',
+  'Libertadores': 'Libertadores',
+  'Brasileirão Série B': '"Série B"'
+}
+
 export const Feed = ({ league, searchTeam }) => {
 
   const [selectedNews, setSelectedNews] = useState(null)
@@ -26,20 +37,51 @@ export const Feed = ({ league, searchTeam }) => {
   }, [favorites])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        const filteredData = mockNews.filter(item => item.league === league)
-        setNewsList(filteredData)
-        setError(null)
-        setIsLoading(false)
-      } catch (err) {
-        setError("Não foi possível carregar as notícias. Tente novamente.")
-        setIsLoading(false)
-        console.log(err)
-      }
-    }, 2000)
+    let ignore = false
 
-    return () => clearTimeout(timer)
+    const fetchNewsFromAPI = async () => {
+      try {
+        const query = leagueQueries[league] || 'futebol'
+
+        const res = await fetch(
+          `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=pt&country=br&apikey=${API_KEY}`
+        )
+
+        if (!res.ok) throw new Error("Erro ao buscar notícias da API")
+
+        const data = await res.json()
+
+        if (!ignore) {
+          const formattedNews = data.articles.map((article, index) => ({
+            id: index + 1,
+            title: article.title,
+            description: article.description,
+            category: "Notícia",
+            league: league,
+            time: "Recente",
+            source: article.source.name,
+            image: article.image,
+            url: article.url
+          }))
+
+          setNewsList(formattedNews)
+          setError(null)
+          setIsLoading(false)
+        }
+      } catch (err) {
+        if (!ignore) {
+          setError("Não foi possível carregar notícias dessa competição.")
+          setIsLoading(false)
+          console.log(err)
+        }
+      }
+    }
+
+    fetchNewsFromAPI()
+
+    return () => {
+      ignore = true
+    }
   }, [league])
 
   const handleRetry = () => {
@@ -81,8 +123,8 @@ export const Feed = ({ league, searchTeam }) => {
             key={btn}
             onClick={() => setSelectedCategory(btn)}
             className={`px-3 py-1 rounded-lg text-xs font-medium transition-all shrink-0 whitespace-nowrap cursor-pointer ${btn === selectedCategory
-                ? 'bg-[var(--brand)] text-[var(--bg-main)] font-bold'
-                : 'bg-transparent text-text-muted hover:text-white'
+              ? 'bg-[var(--brand)] text-[var(--bg-main)] font-bold'
+              : 'bg-transparent text-text-muted hover:text-white'
               }`}
           >
             {btn === 'Salvas' ? `${btn} (${favorites.length})` : btn}
@@ -175,8 +217,8 @@ export const Feed = ({ league, searchTeam }) => {
                     <FontAwesomeIcon
                       icon={faBookmark}
                       className={`text-xs transition-colors ${favorites.includes(noticia.id)
-                          ? 'text-[var(--brand)]'
-                          : 'text-text-muted/30 hover:text-text-muted'
+                        ? 'text-[var(--brand)]'
+                        : 'text-text-muted/30 hover:text-text-muted'
                         }`}
                     />
                   </button>
