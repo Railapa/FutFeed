@@ -1,56 +1,73 @@
-const classificacao = [
-    { id: 1, position: 1, team: 'Flamengo', badge: 'FLA', color: 'bg-red-600', games: 12, points: 28, highlighted: true },
-    { id: 2, position: 2, team: 'Palmeiras', badge: 'PAL', color: 'bg-green-600', games: 12, points: 25 },
-    { id: 3, position: 3, team: 'Atlético-MG', badge: 'CAM', color: 'bg-gray-600', games: 12, points: 22 },
-    { id: 4, position: 4, team: 'São Paulo', badge: 'SPF', color: 'bg-red-500', games: 12, points: 21 },
-    { id: 5, position: 5, team: 'Botafogo', badge: 'BOT', color: 'bg-black', games: 12, points: 20 },
-]
+import { useState } from 'react'
+import { StandingsModal } from './StandingsModal'
 
-export const Standings = () => {
-    return (
-        <div className="bg-bg-card p-4 rounded-2xl ring-1 ring-white/5">
+export const Standings = ({ league }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-            <div className="flex justify-between items-center mb-3">
-                <h3 className="text-[11px] font-bold tracking-wider text-text-muted uppercase">
-                    Classificação
-                </h3>
-                <span className="text-[11px] text-text-muted">Série A</span>
-            </div>
+  const top5Mock = [
+    { pos: 1, team: 'Flamengo', pts: 28, color: 'bg-red-600' },
+    { pos: 2, team: 'Palmeiras', pts: 25, color: 'bg-emerald-600' },
+    { pos: 3, team: 'Atlético-MG', pts: 22, color: 'bg-gray-800' },
+    { pos: 4, team: 'São Paulo', pts: 21, color: 'bg-red-700' },
+    { pos: 5, team: 'Botafogo', pts: 20, color: 'bg-black' },
+  ]
 
-            <div className="flex items-center text-[11px] text-text-muted font-semibold mb-1 px-2">
-                <span className="w-5">#</span>
-                <span className="flex-1">TIME</span>
-                <span className="w-7 text-center">J</span>
-                <span className="w-7 text-right">PTS</span>
-            </div>
-
-            {classificacao.map(time => (
-                <div
-                    key={time.id}
-                    className={`flex items-center text-xs py-1.5 px-2 rounded-lg transition-all ${
-                        time.highlighted 
-                            ? 'bg-[var(--brand)]/10 text-[var(--brand)] font-bold' 
-                            : 'text-text-main hover:bg-white/5'
-                    }`}
-                >
-                    <span className="w-5 text-[11px] font-semibold">{time.position}</span>
-
-                    <div className="flex-1 flex items-center gap-2">
-                        <span className={`w-4 h-4 rounded-full ${time.color} text-[7px] font-bold text-white flex items-center justify-center shrink-0`}>
-                            {time.badge}
-                        </span>
-                        <span className="truncate text-xs">{time.team}</span>
-                    </div>
-
-                    <span className="w-7 text-center text-text-muted font-normal text-[11px]">{time.games}</span>
-
-                    <span className="w-7 text-right font-bold text-xs">{time.points}</span>
-                </div>
-            ))}
-
-            <button className="w-full text-left text-xs text-[var(--brand)] hover:underline mt-3 cursor-pointer font-bold">
-                Ver tabela completa &gt;
-            </button>
+  return (
+    <>
+      <div className="bg-bg-card rounded-2xl ring-1 ring-white/5 p-4 flex flex-col gap-3">
+        
+        <div className="flex items-center justify-between pb-2 border-b border-white/5">
+          <h3 className="text-[11px] font-bold tracking-wider text-text-muted uppercase">
+            Classificação
+          </h3>
+          <span className="text-[9px] bg-white/5 text-text-muted px-2 py-0.5 rounded font-medium">
+            Série A
+          </span>
         </div>
-    )
+
+        <div className="flex flex-col gap-2">
+          <div className="flex justify-between items-center text-[9px] font-bold text-text-muted uppercase px-1">
+            <span className="w-4 text-center">#</span>
+            <span className="flex-1 ml-2">Time</span>
+            <span className="w-6 text-center">Pts</span>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            {top5Mock.map((item) => (
+              <div
+                key={item.pos}
+                className="flex items-center justify-between text-xs p-1 rounded hover:bg-white/5 transition-colors"
+              >
+                <span className={`w-4 text-center font-bold text-[10px] ${item.pos <= 4 ? 'text-blue-400' : 'text-text-muted'}`}>
+                  {item.pos}
+                </span>
+                <div className="flex items-center gap-2 flex-1 ml-2">
+                  <span className={`w-2.5 h-2.5 rounded-full ${item.color} shrink-0`}></span>
+                  <span className="font-semibold text-text-main text-[11px] truncate">
+                    {item.team}
+                  </span>
+                </div>
+                <span className="w-6 text-center font-bold text-text-main text-[11px]">
+                  {item.pts}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="text-[11px] font-bold text-[var(--brand)] hover:underline text-left mt-1 cursor-pointer"
+        >
+          Ver tabela completa &gt;
+        </button>
+      </div>
+
+      <StandingsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        league={league}
+      />
+    </>
+  )
 }
