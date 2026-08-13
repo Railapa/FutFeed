@@ -15,33 +15,48 @@ const leagueCodes = {
 }
 
 const fallbacksByLeague = {
-  premier: [
-    { id: 65, pos: 1, team: 'Man City', pts: 28, j: 10, v: 9, e: 1, d: 0, sg: 18, crest: 'https://crests.football-data.org/65.png' },
-    { id: 57, pos: 2, team: 'Arsenal', pts: 25, j: 10, v: 8, e: 1, d: 1, sg: 14, crest: 'https://crests.football-data.org/57.png' },
-    { id: 64, pos: 3, team: 'Liverpool', pts: 24, j: 10, v: 7, e: 3, d: 0, sg: 12, crest: 'https://crests.football-data.org/64.png' },
-    { id: 61, pos: 4, team: 'Chelsea', pts: 20, j: 10, v: 6, e: 2, d: 2, sg: 8, crest: 'https://crests.football-data.org/61.png' },
-    { id: 73, pos: 5, team: 'Tottenham', pts: 18, j: 10, v: 5, e: 3, d: 2, sg: 6, crest: 'https://crests.football-data.org/73.png' }
+  brasileirao: [
+    { id: 1769, pos: 1, team: 'Palmeiras', pts: 48, j: 20, v: 14, e: 6, d: 2, sg: 22, crest: 'https://crests.football-data.org/1769.png' },
+    { id: 1783, pos: 2, team: 'Flamengo', pts: 42, j: 21, v: 12, e: 6, d: 3, sg: 21, crest: 'https://crests.football-data.org/1783.png' },
+    { id: 1764, pos: 3, team: 'Paranaense', pts: 40, j: 22, v: 12, e: 4, d: 6, sg: 11, crest: 'https://crests.football-data.org/1764.png' },
+    { id: 1765, pos: 4, team: 'Fluminense', pts: 35, j: 22, v: 9, e: 8, d: 5, sg: 5, crest: 'https://crests.football-data.org/1765.png' },
+    { id: 1780, pos: 5, team: 'Cruzeiro', pts: 33, j: 22, v: 9, e: 6, d: 7, sg: 5, crest: 'https://crests.football-data.org/1780.png' },
+    { id: 1777, pos: 6, team: 'Bahia', pts: 33, j: 22, v: 9, e: 6, d: 7, sg: 4, crest: 'https://crests.football-data.org/1777.png' },
+    { id: 1771, pos: 7, team: 'Corinthians', pts: 32, j: 22, v: 8, e: 8, d: 6, sg: 4, crest: 'https://crests.football-data.org/1771.png' },
+    { id: 1775, pos: 8, team: 'Bragantino', pts: 31, j: 21, v: 8, e: 7, d: 6, sg: 2, crest: 'https://crests.football-data.org/1775.png' },
+    { id: 1770, pos: 9, team: 'Botafogo', pts: 30, j: 22, v: 8, e: 6, d: 8, sg: 2, crest: 'https://crests.football-data.org/1770.png' },
+    { id: 1772, pos: 10, team: 'Coritiba', pts: 26, j: 22, v: 8, e: 2, d: 12, sg: -2, crest: 'https://crests.football-data.org/1772.png' },
+    { id: 1766, pos: 11, team: 'Mineiro', pts: 26, j: 21, v: 6, e: 8, d: 7, sg: -2, crest: 'https://crests.football-data.org/1766.png' },
+    { id: 1776, pos: 12, team: 'São Paulo', pts: 26, j: 21, v: 7, e: 5, d: 9, sg: -1, crest: 'https://crests.football-data.org/1776.png' },
+    { id: 1774, pos: 13, team: 'Vitória', pts: 26, j: 22, v: 7, e: 5, d: 10, sg: -11, crest: 'https://crests.football-data.org/1774.png' },
+    { id: 1767, pos: 14, team: 'Grêmio', pts: 25, j: 21, v: 6, e: 7, d: 8, sg: -3, crest: 'https://crests.football-data.org/1767.png' },
+    { id: 1785, pos: 15, team: 'Mirassol', pts: 23, j: 21, v: 6, e: 5, d: 10, sg: -6, crest: 'https://crests.football-data.org/1785.png' },
+    { id: 1782, pos: 16, team: 'Internacional', pts: 23, j: 22, v: 5, e: 8, d: 9, sg: -8, crest: 'https://crests.football-data.org/1782.png' },
+    { id: 1773, pos: 17, team: 'Santos', pts: 22, j: 22, v: 5, e: 7, d: 10, sg: -8, crest: 'https://crests.football-data.org/1773.png' },
+    { id: 1779, pos: 18, team: 'Vasco da Gama', pts: 22, j: 21, v: 5, e: 7, d: 9, sg: -8, crest: 'https://crests.football-data.org/1779.png' },
+    { id: 1778, pos: 19, team: 'Clube do Remo', pts: 22, j: 22, v: 5, e: 7, d: 10, sg: -10, crest: 'https://crests.football-data.org/1778.png' },
+    { id: 1781, pos: 20, team: 'Chapecoense', pts: 18, j: 21, v: 1, e: 7, d: 13, sg: -23, crest: 'https://crests.football-data.org/1781.png' }
   ],
   champions: [
-    { id: 86, pos: 1, team: 'Real Madrid', pts: 15, j: 5, v: 5, e: 0, d: 0, sg: 10, crest: 'https://crests.football-data.org/86.png' },
-    { id: 5, pos: 2, team: 'Bayern', pts: 13, j: 5, v: 4, e: 1, d: 0, sg: 9, crest: 'https://crests.football-data.org/5.png' },
-    { id: 65, pos: 3, team: 'Man City', pts: 13, j: 5, v: 4, e: 1, d: 0, sg: 8, crest: 'https://crests.football-data.org/65.png' },
-    { id: 521, pos: 4, team: 'PSG', pts: 12, j: 5, v: 4, e: 0, d: 1, sg: 6, crest: 'https://crests.football-data.org/521.png' },
-    { id: 505, pos: 5, team: 'Inter', pts: 10, j: 5, v: 3, e: 1, d: 1, sg: 4, crest: 'https://crests.football-data.org/505.png' }
+    { id: 57, pos: 1, team: 'Arsenal', pts: 24, j: 8, v: 8, e: 0, d: 0, sg: 19, crest: 'https://crests.football-data.org/57.png' },
+    { id: 5, pos: 2, team: 'Bayern', pts: 21, j: 8, v: 7, e: 0, d: 1, sg: 14, crest: 'https://crests.football-data.org/5.png' },
+    { id: 64, pos: 3, team: 'Liverpool', pts: 18, j: 8, v: 6, e: 0, d: 2, sg: 12, crest: 'https://crests.football-data.org/64.png' },
+    { id: 73, pos: 4, team: 'Tottenham', pts: 17, j: 8, v: 5, e: 2, d: 1, sg: 10, crest: 'https://crests.football-data.org/73.png' },
+    { id: 81, pos: 5, team: 'Barça', pts: 16, j: 8, v: 5, e: 1, d: 2, sg: 7, crest: 'https://crests.football-data.org/81.png' }
+  ],
+  premier: [
+    { id: 57, pos: 1, team: 'Arsenal', pts: 85, j: 38, v: 26, e: 7, d: 5, sg: 44, crest: 'https://crests.football-data.org/57.png' },
+    { id: 65, pos: 2, team: 'Man City', pts: 78, j: 38, v: 23, e: 9, d: 6, sg: 42, crest: 'https://crests.football-data.org/65.png' },
+    { id: 66, pos: 3, team: 'Man United', pts: 71, j: 38, v: 20, e: 11, d: 7, sg: 19, crest: 'https://crests.football-data.org/66.png' },
+    { id: 58, pos: 4, team: 'Aston Villa', pts: 65, j: 38, v: 19, e: 8, d: 11, sg: 7, crest: 'https://crests.football-data.org/58.png' },
+    { id: 64, pos: 5, team: 'Liverpool', pts: 60, j: 38, v: 17, e: 9, d: 12, sg: 10, crest: 'https://crests.football-data.org/64.png' }
   ],
   laliga: [
-    { id: 86, pos: 1, team: 'Real Madrid', pts: 27, j: 10, v: 9, e: 0, d: 1, sg: 16, crest: 'https://crests.football-data.org/86.png' },
-    { id: 81, pos: 2, team: 'Barcelona', pts: 24, j: 10, v: 8, e: 0, d: 2, sg: 15, crest: 'https://crests.football-data.org/81.png' },
-    { id: 78, pos: 3, team: 'Atlético Madrid', pts: 22, j: 10, v: 7, e: 1, d: 2, sg: 10, crest: 'https://crests.football-data.org/78.png' },
-    { id: 90, pos: 4, team: 'Real Betis', pts: 19, j: 10, v: 6, e: 1, d: 3, sg: 5, crest: 'https://crests.football-data.org/90.png' },
-    { id: 92, pos: 5, team: 'Real Sociedad', pts: 18, j: 10, v: 5, e: 3, d: 2, sg: 4, crest: 'https://crests.football-data.org/92.png' }
-  ],
-  brasileirao: [
-    { id: 1783, pos: 1, team: 'Flamengo', pts: 28, j: 12, v: 8, e: 4, d: 0, sg: 14, crest: 'https://crests.football-data.org/1783.png' },
-    { id: 1769, pos: 2, team: 'Palmeiras', pts: 25, j: 12, v: 7, e: 4, d: 1, sg: 10, crest: 'https://crests.football-data.org/1769.png' },
-    { id: 1766, pos: 3, team: 'Atlético-MG', pts: 22, j: 12, v: 6, e: 4, d: 2, sg: 7, crest: 'https://crests.football-data.org/1766.png' },
-    { id: 1776, pos: 4, team: 'São Paulo', pts: 21, j: 12, v: 6, e: 3, d: 3, sg: 5, crest: 'https://crests.football-data.org/1776.png' },
-    { id: 1770, pos: 5, team: 'Botafogo', pts: 20, j: 12, v: 6, e: 2, d: 4, sg: 4, crest: 'https://crests.football-data.org/1770.png' }
+    { id: 81, pos: 1, team: 'Barça', pts: 94, j: 38, v: 31, e: 1, d: 6, sg: 59, crest: 'https://crests.football-data.org/81.png' },
+    { id: 86, pos: 2, team: 'Real Madrid', pts: 86, j: 38, v: 27, e: 5, d: 6, sg: 42, crest: 'https://crests.football-data.org/86.png' },
+    { id: 94, pos: 3, team: 'Villarreal', pts: 72, j: 38, v: 22, e: 6, d: 10, sg: 26, crest: 'https://crests.football-data.org/94.png' },
+    { id: 78, pos: 4, team: 'Atleti', pts: 69, j: 38, v: 21, e: 6, d: 11, sg: 18, crest: 'https://crests.football-data.org/78.png' },
+    { id: 90, pos: 5, team: 'Real Betis', pts: 60, j: 38, v: 15, e: 15, d: 8, sg: 11, crest: 'https://crests.football-data.org/90.png' }
   ]
 }
 
@@ -74,7 +89,7 @@ export const Standings = ({ league, setStandings }) => {
           headers: { 'X-Auth-Token': FOOTBALL_API_KEY }
         })
 
-        if (!res.ok) throw new Error("Erro na API de classificação")
+        if (!res.ok) throw new Error("Erro na API")
 
         const data = await res.json()
 
@@ -96,11 +111,11 @@ export const Standings = ({ league, setStandings }) => {
           if (setStandings) setStandings(tableData)
           setIsLoading(false)
         } else {
-          throw new Error("Dados de classificação indisponíveis")
+          throw new Error("Dados inválidos")
         }
       } catch (err) {
         if (!ignore) {
-          console.log("Usando dados de reserva:", err)
+          console.log("Usando fallback de segurança:", err)
           setLocalStandings(currentFallback)
           if (setStandings) setStandings(currentFallback)
           setIsLoading(false)
