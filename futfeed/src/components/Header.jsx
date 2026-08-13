@@ -5,8 +5,6 @@ export const Header = ({ league, setLeague, searchTerm, setSearchTerm }) => {
         {id: 'premier', label:'Premier League'},
         {id: 'champions', label:'Champions League'},
         {id: 'laliga', label:'La Liga'},
-        {id: 'libertadores', label:'Libertadores'},
-        {id: 'brasileiraoB', label:'Brasileirão Serie B'},
     ]
 
   return (

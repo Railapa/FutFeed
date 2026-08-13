@@ -2,47 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-main: #0b132b;
-  --bg-card: #1c2541;
-  --brand: #00ff88b8;
-  --text-main: #ffffff;
-  --text-muted: #a0aec0;
-}
-
-[data-league="premier"] {
-  --bg-main: #130014;
-  --bg-card: #240025;
-  --brand: #af00b9;
-}
-
-[data-league="champions"] {
-  --bg-main: #050b1e;
-  --bg-card: #0d1b3e;
-  --brand: #1886e0;
-}
-
-[data-league="laliga"] {
-  --bg-main: #121212;
-  --bg-card: #1e1e1e;
-  --brand: #ff4b4b;
-}
-
-[data-league="libertadores"] {
-  --bg-main: #1a150e;
-  --bg-card: #2a2216;
-  --brand: #f59e0b;
-}
-
-[data-league="brasileiraoB"] {
-  --bg-main: #061a12;
-  --bg-card: #0d2d20;
-  --brand: #10b981;
-}
-
-body {
-  background-color: var(--bg-main);
+/* 🎨 Transição suave de fundo e cores para toda a aplicação */
+body, 
+.min-h-screen {
+  transition: background 0.5s ease-in-out, color 0.3s ease;
   color: var(--text-main);
-  transition: background-color 0.4s ease, color 0.4s ease;
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 🇧🇷 1. Tema Padrão: Brasileirão Série A (Verde Escuro / Dark Navy) */
+:root {
+  --bg-main: #0a0f1d;
+  --bg-card: rgba(18, 24, 41, 0.85);
+  --brand: #22c55e;
+  --brand-hover: #16a34a;
+  --text-main: #f8fafc;   /* Texto Principal bem claro */
+  --text-muted: #94a3b8;  /* Texto Secundário visível */
+}
+
+body,
+.min-h-screen {
+  background: radial-gradient(circle at top left, #082015 0%, #0a0f1d 50%, #050810 100%);
+  background-attachment: fixed;
+}
+
+/* 🏴󠁧󠁢󠁥𝑛󠁧󠁢gal󠁿 2. Tema Premier League (Roxo Profundo / Magenta Dark) */
+[data-league='premier'] {
+  --brand: #00f6ff;
+  --brand-hover: #00d8e0;
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+}
+
+[data-league='premier'] body,
+[data-league='premier'] .min-h-screen {
+  background: radial-gradient(circle at top left, #280637 0%, #0e0314 50%, #050108 100%);
+  background-attachment: fixed;
+}
+
+/* 🏆 3. Tema Champions League (Azul Noite / Cyan Deep) */
+[data-league='champions'] {
+  --brand: #00f0ff;
+  --brand-hover: #00c8e0;
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+}
+
+[data-league='champions'] body,
+[data-league='champions'] .min-h-screen {
+  background: radial-gradient(circle at top left, #04193d 0%, #040919 50%, #01030a 100%);
+  background-attachment: fixed;
+}
+
+/* 🇪🇸 4. Tema La Liga (Vinho / Dark Red Grafite) */
+[data-league='laliga'] {
+  --brand: #ff4b4b;
+  --brand-hover: #e03a3a;
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+}
+
+[data-league='laliga'] body,
+[data-league='laliga'] .min-h-screen {
+  background: radial-gradient(circle at top left, #380808 0%, #0f0404 50%, #050101 100%);
+  background-attachment: fixed;
+}
+
+/* 🎯 Garante legibilidade em inputs e selects */
+select, input, option {
+  color: #f8fafc;
+}
+
+option {
+  background-color: #121824;
 }

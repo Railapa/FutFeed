@@ -5,19 +5,52 @@ const FOOTBALL_API_KEY = import.meta.env.VITE_FOOTBALL_DATA_API_KEY
 
 const leagueCodes = {
   'Brasileirão Série A': 'BSA',
-  'Champions League': 'CL',
+  'brasileirao': 'BSA',
   'Premier League': 'PL',
-  'La Liga': 'PD'
+  'premier': 'PL',
+  'Champions League': 'CL',
+  'champions': 'CL',
+  'La Liga': 'PD',
+  'laliga': 'PD'
 }
 
-// Fallback com IDs
-const fallbackStandings = [
-  { id: 1783, pos: 1, team: 'Flamengo', pts: 28, j: 12, v: 8, e: 4, d: 0, sg: 14, crest: 'https://crests.football-data.org/1783.png' },
-  { id: 1769, pos: 2, team: 'Palmeiras', pts: 25, j: 12, v: 7, e: 4, d: 1, sg: 10, crest: 'https://crests.football-data.org/1769.png' },
-  { id: 1766, pos: 3, team: 'Atlético-MG', pts: 22, j: 12, v: 6, e: 4, d: 2, sg: 7, crest: 'https://crests.football-data.org/1766.png' },
-  { id: 1776, pos: 4, team: 'São Paulo', pts: 21, j: 12, v: 6, e: 3, d: 3, sg: 5, crest: 'https://crests.football-data.org/1776.png' },
-  { id: 1770, pos: 5, team: 'Botafogo', pts: 20, j: 12, v: 6, e: 2, d: 4, sg: 4, crest: 'https://crests.football-data.org/1770.png' }
-]
+const fallbacksByLeague = {
+  premier: [
+    { id: 65, pos: 1, team: 'Man City', pts: 28, j: 10, v: 9, e: 1, d: 0, sg: 18, crest: 'https://crests.football-data.org/65.png' },
+    { id: 57, pos: 2, team: 'Arsenal', pts: 25, j: 10, v: 8, e: 1, d: 1, sg: 14, crest: 'https://crests.football-data.org/57.png' },
+    { id: 64, pos: 3, team: 'Liverpool', pts: 24, j: 10, v: 7, e: 3, d: 0, sg: 12, crest: 'https://crests.football-data.org/64.png' },
+    { id: 61, pos: 4, team: 'Chelsea', pts: 20, j: 10, v: 6, e: 2, d: 2, sg: 8, crest: 'https://crests.football-data.org/61.png' },
+    { id: 73, pos: 5, team: 'Tottenham', pts: 18, j: 10, v: 5, e: 3, d: 2, sg: 6, crest: 'https://crests.football-data.org/73.png' }
+  ],
+  champions: [
+    { id: 86, pos: 1, team: 'Real Madrid', pts: 15, j: 5, v: 5, e: 0, d: 0, sg: 10, crest: 'https://crests.football-data.org/86.png' },
+    { id: 5, pos: 2, team: 'Bayern', pts: 13, j: 5, v: 4, e: 1, d: 0, sg: 9, crest: 'https://crests.football-data.org/5.png' },
+    { id: 65, pos: 3, team: 'Man City', pts: 13, j: 5, v: 4, e: 1, d: 0, sg: 8, crest: 'https://crests.football-data.org/65.png' },
+    { id: 521, pos: 4, team: 'PSG', pts: 12, j: 5, v: 4, e: 0, d: 1, sg: 6, crest: 'https://crests.football-data.org/521.png' },
+    { id: 505, pos: 5, team: 'Inter', pts: 10, j: 5, v: 3, e: 1, d: 1, sg: 4, crest: 'https://crests.football-data.org/505.png' }
+  ],
+  laliga: [
+    { id: 86, pos: 1, team: 'Real Madrid', pts: 27, j: 10, v: 9, e: 0, d: 1, sg: 16, crest: 'https://crests.football-data.org/86.png' },
+    { id: 81, pos: 2, team: 'Barcelona', pts: 24, j: 10, v: 8, e: 0, d: 2, sg: 15, crest: 'https://crests.football-data.org/81.png' },
+    { id: 78, pos: 3, team: 'Atlético Madrid', pts: 22, j: 10, v: 7, e: 1, d: 2, sg: 10, crest: 'https://crests.football-data.org/78.png' },
+    { id: 90, pos: 4, team: 'Real Betis', pts: 19, j: 10, v: 6, e: 1, d: 3, sg: 5, crest: 'https://crests.football-data.org/90.png' },
+    { id: 92, pos: 5, team: 'Real Sociedad', pts: 18, j: 10, v: 5, e: 3, d: 2, sg: 4, crest: 'https://crests.football-data.org/92.png' }
+  ],
+  libertadores: [
+    { id: 1783, pos: 1, team: 'Flamengo', pts: 13, j: 6, v: 4, e: 1, d: 1, sg: 8, crest: 'https://crests.football-data.org/1783.png' },
+    { id: 1769, pos: 2, team: 'Palmeiras', pts: 13, j: 6, v: 4, e: 1, d: 1, sg: 7, crest: 'https://crests.football-data.org/1769.png' },
+    { id: 2000, pos: 3, team: 'River Plate', pts: 12, j: 6, v: 4, e: 0, d: 2, sg: 5, crest: 'https://crests.football-data.org/1783.png' },
+    { id: 1770, pos: 4, team: 'Botafogo', pts: 10, j: 6, v: 3, e: 1, d: 2, sg: 3, crest: 'https://crests.football-data.org/1770.png' },
+    { id: 1776, pos: 5, team: 'São Paulo', pts: 10, j: 6, v: 3, e: 1, d: 2, sg: 2, crest: 'https://crests.football-data.org/1776.png' }
+  ],
+  'brasileirao': [
+    { id: 1783, pos: 1, team: 'Flamengo', pts: 28, j: 12, v: 8, e: 4, d: 0, sg: 14, crest: 'https://crests.football-data.org/1783.png' },
+    { id: 1769, pos: 2, team: 'Palmeiras', pts: 25, j: 12, v: 7, e: 4, d: 1, sg: 10, crest: 'https://crests.football-data.org/1769.png' },
+    { id: 1766, pos: 3, team: 'Atlético-MG', pts: 22, j: 12, v: 6, e: 4, d: 2, sg: 7, crest: 'https://crests.football-data.org/1766.png' },
+    { id: 1776, pos: 4, team: 'São Paulo', pts: 21, j: 12, v: 6, e: 3, d: 3, sg: 5, crest: 'https://crests.football-data.org/1776.png' },
+    { id: 1770, pos: 5, team: 'Botafogo', pts: 20, j: 12, v: 6, e: 2, d: 4, sg: 4, crest: 'https://crests.football-data.org/1770.png' }
+  ]
+}
 
 export const Standings = ({ league, setStandings }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -28,7 +61,19 @@ export const Standings = ({ league, setStandings }) => {
     let ignore = false
 
     const fetchStandings = async () => {
-      const code = leagueCodes[league] || 'BSA'
+      setIsLoading(true)
+      const code = leagueCodes[league]
+      const currentFallback = fallbacksByLeague[league] || fallbacksByLeague['brasileirao']
+
+      if (!code) {
+        if (!ignore) {
+          setLocalStandings(currentFallback)
+          if (setStandings) setStandings(currentFallback)
+          setIsLoading(false)
+        }
+        return
+      }
+
       const targetUrl = `https://api.football-data.org/v4/competitions/${code}/standings`
       const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
 
@@ -43,7 +88,7 @@ export const Standings = ({ league, setStandings }) => {
 
         if (!ignore && data.standings && data.standings[0]) {
           const tableData = data.standings[0].table.map(item => ({
-            id: item.team.id, // 👈 ID único do time na API!
+            id: item.team.id,
             pos: item.position,
             team: item.team.shortName || item.team.name,
             pts: item.points,
@@ -63,9 +108,9 @@ export const Standings = ({ league, setStandings }) => {
         }
       } catch (err) {
         if (!ignore) {
-          console.log("Usando dados de reserva:", err)
-          setLocalStandings(fallbackStandings)
-          if (setStandings) setStandings(fallbackStandings)
+          console.log("Usando dados de reserva da liga:", err)
+          setLocalStandings(currentFallback)
+          if (setStandings) setStandings(currentFallback)
           setIsLoading(false)
         }
       }

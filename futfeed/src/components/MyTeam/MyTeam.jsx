@@ -13,24 +13,27 @@ const leagueCodes = {
   'laliga': 'PD'
 }
 
-export const MyTeam = ({ standings = [], league, myTeamId, setMyTeamId }) => {
-  const [localTeamId, setLocalTeamId] = useState(() => {
-    return localStorage.getItem('futfeed_myteam') || ''
+export const MyTeam = ({ standings = [], league }) => {
+  const storageKey = `futfeed_myteam_${league || 'brasileirao'}`
+
+  const [prevLeague, setPrevLeague] = useState(league)
+  const [selectedTeamId, setSelectedTeamId] = useState(() => {
+    return localStorage.getItem(storageKey) || ''
   })
 
-  const currentTeamId = myTeamId !== undefined ? myTeamId : localTeamId
-  const changeTeamId = setMyTeamId || setLocalTeamId
+  if (prevLeague !== league) {
+    setPrevLeague(league)
+    setSelectedTeamId(localStorage.getItem(storageKey) || '')
+  }
 
   const [matches, setMatches] = useState([])
   const [isLoadingMatches, setIsLoadingMatches] = useState(true)
 
-  useEffect(() => {
-    if (currentTeamId) {
-      localStorage.setItem('futfeed_myteam', currentTeamId)
-    }
-  }, [currentTeamId])
-
-  const activeTeamId = currentTeamId || standings[0]?.id || ''
+  const handleTeamChange = (e) => {
+    const id = e.target.value
+    setSelectedTeamId(id)
+    localStorage.setItem(storageKey, id)
+  }
 
   useEffect(() => {
     let ignore = false
@@ -68,7 +71,7 @@ export const MyTeam = ({ standings = [], league, myTeamId, setMyTeamId }) => {
     return () => { ignore = true }
   }, [league])
 
-  const teamData = standings.find(item => String(item.id) === String(activeTeamId)) || standings[0] || {
+  const teamData = standings.find(item => String(item.id) === String(selectedTeamId)) || standings[0] || {
     id: null,
     team: 'Selecione',
     pos: '-',
@@ -122,8 +125,8 @@ export const MyTeam = ({ standings = [], league, myTeamId, setMyTeamId }) => {
         
         <div className="relative">
           <select
-            value={activeTeamId}
-            onChange={(e) => changeTeamId(e.target.value)}
+            value={teamData.id || ''}
+            onChange={handleTeamChange}
             className="bg-white/5 hover:bg-white/10 text-text-main text-[11px] font-bold py-1.5 pl-3 pr-7 rounded-xl border border-white/10 focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)] cursor-pointer outline-none transition-all appearance-none max-w-[140px] truncate"
           >
             {standings.map(item => (
@@ -135,7 +138,7 @@ export const MyTeam = ({ standings = [], league, myTeamId, setMyTeamId }) => {
           
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-text-muted">
             <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
-              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 0l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
             </svg>
           </div>
         </div>
