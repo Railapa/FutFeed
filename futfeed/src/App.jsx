@@ -15,6 +15,8 @@ function App() {
   })
   const [searchTerm, setSearchTeam] = useState('')
 
+  const [standings, setStandings] = useState([])
+
   useEffect(() => {
     if (league === 'brasileirao') {
       document.documentElement.removeAttribute('data-league')
@@ -26,7 +28,7 @@ function App() {
   }, [league])
 
   const [myTeamId, setMyTeamId] = useState(() => {
-    localStorage.getItem('futfeed_myteam') || 'VIT'
+    return localStorage.getItem('futfeed_myteam') || 'VIT'
   })
 
   useEffect(() => {
@@ -47,14 +49,20 @@ function App() {
         <Matches league={league} />
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5 items-start">
-          
+
           <div>
             <Feed league={league} searchTeam={searchTerm} />
           </div>
 
           <aside className="flex flex-col gap-4 sticky top-4">
-            <Standings league={league} />
-            <MyTeam myTeamId={myTeamId} setMyTeamId={setMyTeamId} />
+            <Standings league={league} setStandings={setStandings} />
+
+            <MyTeam
+              myTeamId={myTeamId}
+              setMyTeamId={setMyTeamId}
+              standings={standings}
+              league={league}
+            />
           </aside>
 
         </div>

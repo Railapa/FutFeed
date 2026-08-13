@@ -1,110 +1,209 @@
-import { mockTeams } from '../../data/teams'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faBolt } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect } from 'react'
 
-export const MyTeam = ({ myTeamId, setMyTeamId }) => {
+const FOOTBALL_API_KEY = import.meta.env.VITE_FOOTBALL_DATA_API_KEY
 
-    const currentTeam = mockTeams.find(t => t.id === myTeamId) || mockTeams[0]
+const leagueCodes = {
+  'Brasileirão Série A': 'BSA',
+  'brasileirao': 'BSA',
+  'Champions League': 'CL',
+  'champions': 'CL',
+  'Premier League': 'PL',
+  'premier': 'PL',
+  'La Liga': 'PD',
+  'laliga': 'PD'
+}
 
-    return (
-        <div className="flex flex-col gap-2.5">
-            <div className="bg-bg-card w-full ring-1 ring-white/5 rounded-2xl p-4 flex flex-col gap-3">
+export const MyTeam = ({ standings = [], league, myTeamId, setMyTeamId }) => {
+  const [localTeamId, setLocalTeamId] = useState(() => {
+    return localStorage.getItem('futfeed_myteam') || ''
+  })
 
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                        <FontAwesomeIcon icon={faStar} className="text-yellow-400 text-[10px]" />
-                        <h3 className="text-[11px] font-bold tracking-wider text-text-muted uppercase">
-                            Meu Time
-                        </h3>
-                    </div>
+  const currentTeamId = myTeamId !== undefined ? myTeamId : localTeamId
+  const changeTeamId = setMyTeamId || setLocalTeamId
 
-                    <select
-                        value={myTeamId}
-                        onChange={(e) => setMyTeamId(e.target.value)}
-                        className="bg-bg-main text-text-main text-[10px] font-semibold px-2 py-0.5 rounded-lg border border-white/5 cursor-pointer outline-none focus:ring-1 focus:ring-[var(--brand)]"
-                    >
-                        {mockTeams.map(team => (
-                            <option key={team.id} value={team.id}>
-                                {team.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+  const [matches, setMatches] = useState([])
+  const [isLoadingMatches, setIsLoadingMatches] = useState(true)
 
-                <div className="flex items-center gap-2.5">
-                    <div className={`w-9 h-9 rounded-xl ${currentTeam.color} text-white font-bold flex items-center justify-center text-[10px] shrink-0 shadow-sm`}>
-                        {currentTeam.badge}
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-xs text-text-main">{currentTeam.name}</h4>
-                        <span className="text-[9px] text-[var(--brand)] bg-[var(--brand)]/10 px-2 py-0.5 rounded-full font-semibold">
-                            {currentTeam.status}
-                        </span>
-                    </div>
-                </div>
+  useEffect(() => {
+    if (currentTeamId) {
+      localStorage.setItem('futfeed_myteam', currentTeamId)
+    }
+  }, [currentTeamId])
 
-                <div className="bg-bg-main/60 p-2.5 rounded-xl ring-1 ring-white/5 flex flex-col gap-1.5">
-                    <span className="text-[9px] text-text-muted font-semibold tracking-wider uppercase">
-                        Próxima Partida
-                    </span>
+  const activeTeamId = currentTeamId || standings[0]?.id || ''
 
-                    <div className="flex justify-between items-center text-xs font-bold">
-                        <div className="flex items-center gap-1">
-                            <span className={`w-4 h-4 rounded-full ${currentTeam.nextMatch.homeColor} text-[7px] text-white flex items-center justify-center font-bold shrink-0`}>
-                                {currentTeam.nextMatch.homeBadge}
-                            </span>
-                            <span className="text-text-main text-[11px]">{currentTeam.nextMatch.homeTeam}</span>
-                        </div>
+  useEffect(() => {
+    let ignore = false
 
-                        <span className="text-[9px] text-[var(--brand)] bg-[var(--brand)]/15 px-1.5 py-0.5 rounded-full font-bold flex items-center gap-1">
-                            {currentTeam.nextMatch.status.includes("'") && (
-                                <span className="w-1 h-1 rounded-full bg-[var(--brand)] animate-pulse"></span>
-                            )}
-                            {currentTeam.nextMatch.status}
-                        </span>
+    const fetchMatches = async () => {
+      setIsLoadingMatches(true)
+      const code = leagueCodes[league] || 'BSA'
+      const targetUrl = `https://api.football-data.org/v4/competitions/${code}/matches`
+      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
 
-                        <div className="flex items-center gap-1">
-                            <span className="text-text-main text-[11px]">{currentTeam.nextMatch.awayTeam}</span>
-                            <span className={`w-4 h-4 rounded-full ${currentTeam.nextMatch.awayColor} text-[7px] text-white flex items-center justify-center font-bold shrink-0`}>
-                                {currentTeam.nextMatch.awayBadge}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+      try {
+        const res = await fetch(proxyUrl, {
+          headers: { 'X-Auth-Token': FOOTBALL_API_KEY }
+        })
 
-                <div className="flex flex-col gap-1.5">
-                    <span className="text-[9px] text-text-muted font-semibold tracking-wider uppercase">
-                        Última Notícia
-                    </span>
+        if (!res.ok) throw new Error("Erro na API")
 
-                    <div className="flex items-center gap-2.5 cursor-pointer group">
-                        <img
-                            src={currentTeam.latestNews.image}
-                            alt={currentTeam.latestNews.title}
-                            className="w-10 h-10 rounded-lg object-cover shrink-0"
-                        />
-                        <p className="text-[11px] font-medium text-text-main leading-tight group-hover:text-[var(--brand)] transition-colors line-clamp-2">
-                            {currentTeam.latestNews.title}
-                        </p>
-                    </div>
-                </div>
+        const data = await res.json()
 
-            </div>
+        if (!ignore && data.matches) {
+          setMatches(data.matches)
+        }
+      } catch (err) {
+        if (!ignore) {
+          console.log("Erro ao buscar partidas do Meu Time:", err)
+          setMatches([])
+        }
+      } finally {
+        if (!ignore) setIsLoadingMatches(false)
+      }
+    }
 
-            <div className="ring-1 ring-white/5 bg-[var(--brand)]/5 p-2.5 rounded-xl flex items-center gap-2.5 cursor-pointer hover:bg-[var(--brand)]/10 transition-colors">
-                <div className="w-7 h-7 rounded-full bg-[var(--brand)]/20 text-[var(--brand)] flex items-center justify-center shrink-0">
-                    <FontAwesomeIcon icon={faBolt} className="text-[10px]" />
-                </div>
-                <div>
-                    <p className="text-[11px] font-bold text-[var(--brand)] flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-ping"></span>
-                        2 jogos ao vivo agora
-                    </p>
-                    <p className="text-[9px] text-text-muted">
-                        Atualização em tempo real
-                    </p>
-                </div>
-            </div>
+    fetchMatches()
+
+    return () => { ignore = true }
+  }, [league])
+
+  const teamData = standings.find(item => String(item.id) === String(activeTeamId)) || standings[0] || {
+    id: null,
+    team: 'Selecione',
+    pos: '-',
+    pts: 0,
+    crest: null
+  }
+
+  const now = new Date()
+  const validStatuses = ['SCHEDULED', 'TIMED', 'IN_PLAY', 'PAUSED']
+
+  const nextMatchData = matches
+    .filter(m => {
+      const matchDate = new Date(m.utcDate)
+      const isFutureOrNow = matchDate >= new Date(now.getTime() - 2 * 3600 * 1000)
+      const isValidStatus = validStatuses.includes(m.status)
+      return isFutureOrNow && isValidStatus
+    })
+    .filter(m => String(m.homeTeam.id) === String(teamData.id) || String(m.awayTeam.id) === String(teamData.id))
+    .sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate))[0]
+
+  let formattedNextMatch = null
+
+  if (nextMatchData) {
+    const dateObj = new Date(nextMatchData.utcDate)
+    
+    const rawWeekday = dateObj.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')
+    const weekday = rawWeekday.charAt(0).toUpperCase() + rawWeekday.slice(1)
+    
+    const timeStr = dateObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+
+    const homeTeam = nextMatchData.homeTeam.shortName || nextMatchData.homeTeam.name
+    const awayTeam = nextMatchData.awayTeam.shortName || nextMatchData.awayTeam.name
+
+    formattedNextMatch = {
+      homeTeam,
+      homeCrest: nextMatchData.homeTeam.crest,
+      awayTeam,
+      awayCrest: nextMatchData.awayTeam.crest,
+      matchInfo: `${weekday} ${timeStr}`,
+      isLive: nextMatchData.status === 'IN_PLAY' || nextMatchData.status === 'PAUSED'
+    }
+  }
+
+  return (
+    <div className="bg-bg-card rounded-2xl ring-1 ring-white/5 p-4 flex flex-col gap-3 shadow-lg">
+      
+      <div className="flex items-center justify-between pb-2 border-b border-white/5">
+        <h3 className="text-[11px] font-bold tracking-wider text-text-muted uppercase flex items-center gap-1.5">
+          <span className="text-yellow-400">★</span> Meu Time
+        </h3>
+        
+        <div className="relative">
+          <select
+            value={activeTeamId}
+            onChange={(e) => changeTeamId(e.target.value)}
+            className="bg-white/5 hover:bg-white/10 text-text-main text-[11px] font-bold py-1.5 pl-3 pr-7 rounded-xl border border-white/10 focus:border-[var(--brand)] focus:ring-1 focus:ring-[var(--brand)] cursor-pointer outline-none transition-all appearance-none max-w-[140px] truncate"
+          >
+            {standings.map(item => (
+              <option key={item.id} value={item.id} className="bg-[#121824] text-text-main py-1">
+                {item.team}
+              </option>
+            ))}
+          </select>
+          
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-text-muted">
+            <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
+              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 0l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+            </svg>
+          </div>
         </div>
-    )
+      </div>
+
+      <div className="flex items-center justify-between bg-white/5 p-3 rounded-xl ring-1 ring-white/5">
+        <div className="flex items-center gap-3">
+          {teamData.crest ? (
+            <img src={teamData.crest} alt={teamData.team} className="w-9 h-9 object-contain shrink-0" />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-[var(--brand)]/20 text-[var(--brand)] flex items-center justify-center font-bold text-xs shrink-0">
+              {teamData.team ? teamData.team.substring(0, 3).toUpperCase() : 'FUT'}
+            </div>
+          )}
+          <div>
+            <h4 className="text-xs font-bold text-text-main truncate max-w-[140px]">
+              {teamData.team || 'Selecione um time'}
+            </h4>
+            <p className="text-[10px] text-green-400 font-semibold mt-0.5">
+              {teamData.pos !== '-' ? `${teamData.pos}º colocado • ${teamData.pts} pts` : 'Buscando dados...'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2 pt-1 border-t border-white/5">
+        <span className="text-[9px] font-bold text-text-muted uppercase tracking-wider">
+          Próxima Partida
+        </span>
+
+        {isLoadingMatches ? (
+          <div className="h-10 bg-white/5 animate-pulse rounded-xl"></div>
+        ) : formattedNextMatch ? (
+          <div className="bg-white/5 p-2.5 rounded-xl flex items-center justify-between ring-1 ring-white/5">
+            <div className="flex items-center gap-1.5 min-w-0 flex-1">
+              {formattedNextMatch.homeCrest && (
+                <img src={formattedNextMatch.homeCrest} alt={formattedNextMatch.homeTeam} className="w-4 h-4 object-contain shrink-0" />
+              )}
+              <span className="text-[11px] font-bold text-text-main truncate">{formattedNextMatch.homeTeam}</span>
+            </div>
+
+            <div className="px-2 py-0.5 rounded bg-black/40 border border-white/10 flex items-center gap-1 shrink-0 mx-1">
+              <span className={`w-1.5 h-1.5 rounded-full ${formattedNextMatch.isLive ? 'bg-red-500 animate-pulse' : 'bg-green-400 animate-pulse'}`}></span>
+              <span className="text-[10px] font-bold text-[var(--brand)]">
+                {formattedNextMatch.isLive ? 'AO VIVO' : formattedNextMatch.matchInfo}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-end gap-1.5 min-w-0 flex-1 text-right">
+              <span className="truncate text-[11px] font-bold text-text-main">{formattedNextMatch.awayTeam}</span>
+              {formattedNextMatch.awayCrest && (
+                <img src={formattedNextMatch.awayCrest} alt={formattedNextMatch.awayTeam} className="w-4 h-4 object-contain shrink-0" />
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="py-2 px-3 text-center bg-white/[0.02] border border-white/5 rounded-xl">
+            <p className="text-[10px] text-text-muted font-medium">
+              Sem próximas partidas agendadas.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div className="text-[10px] text-text-muted flex justify-between items-center px-1 pt-1">
+        <span>Notificações ativadas</span>
+        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+      </div>
+    </div>
+  )
 }
