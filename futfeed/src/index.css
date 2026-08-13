@@ -2,21 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 🎨 Transição suave de fundo e cores para toda a aplicação */
 body, 
 .min-h-screen {
   transition: background 0.5s ease-in-out, color 0.3s ease;
   color: var(--text-main);
 }
 
-/* 🇧🇷 1. Tema Padrão: Brasileirão Série A (Verde Escuro / Dark Navy) */
 :root {
   --bg-main: #0a0f1d;
   --bg-card: rgba(18, 24, 41, 0.85);
   --brand: #22c55e;
   --brand-hover: #16a34a;
-  --text-main: #f8fafc;   /* Texto Principal bem claro */
-  --text-muted: #94a3b8;  /* Texto Secundário visível */
+  --text-main: #f8fafc;   
+  --text-muted: #94a3b8; 
 }
 
 body,
@@ -25,7 +23,6 @@ body,
   background-attachment: fixed;
 }
 
-/* 🏴󠁧󠁢󠁥𝑛󠁧󠁢gal󠁿 2. Tema Premier League (Roxo Profundo / Magenta Dark) */
 [data-league='premier'] {
   --brand: #00f6ff;
   --brand-hover: #00d8e0;
@@ -39,7 +36,7 @@ body,
   background-attachment: fixed;
 }
 
-/* 🏆 3. Tema Champions League (Azul Noite / Cyan Deep) */
+
 [data-league='champions'] {
   --brand: #00f0ff;
   --brand-hover: #00c8e0;
@@ -53,7 +50,6 @@ body,
   background-attachment: fixed;
 }
 
-/* 🇪🇸 4. Tema La Liga (Vinho / Dark Red Grafite) */
 [data-league='laliga'] {
   --brand: #ff4b4b;
   --brand-hover: #e03a3a;
@@ -67,7 +63,6 @@ body,
   background-attachment: fixed;
 }
 
-/* 🎯 Garante legibilidade em inputs e selects */
 select, input, option {
   color: #f8fafc;
 }
