@@ -41,15 +41,15 @@ export const MyTeam = ({ standings = [], league }) => {
     const fetchMatches = async () => {
       setIsLoadingMatches(true)
       const code = leagueCodes[league] || 'BSA'
-      const targetUrl = `https://api.football-data.org/v4/competitions/${code}/matches`
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
+      
+      const fetchUrl = `/api/football/competitions/${code}/matches`
 
       try {
-        const res = await fetch(proxyUrl, {
+        const res = await fetch(fetchUrl, {
           headers: { 'X-Auth-Token': FOOTBALL_API_KEY }
         })
 
-        if (!res.ok) throw new Error("Erro na API")
+        if (!res.ok) throw new Error("Erro na API de partidas")
 
         const data = await res.json()
 

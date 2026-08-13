@@ -67,15 +67,14 @@ export const Standings = ({ league, setStandings }) => {
         return
       }
 
-      const targetUrl = `https://api.football-data.org/v4/competitions/${code}/standings`
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
+      const fetchUrl = `/api/football/competitions/${code}/standings`
 
       try {
-        const res = await fetch(proxyUrl, {
+        const res = await fetch(fetchUrl, {
           headers: { 'X-Auth-Token': FOOTBALL_API_KEY }
         })
 
-        if (!res.ok) throw new Error("Erro na API")
+        if (!res.ok) throw new Error("Erro na API de classificação")
 
         const data = await res.json()
 
@@ -97,11 +96,11 @@ export const Standings = ({ league, setStandings }) => {
           if (setStandings) setStandings(tableData)
           setIsLoading(false)
         } else {
-          throw new Error("Dados inválidos")
+          throw new Error("Dados de classificação indisponíveis")
         }
       } catch (err) {
         if (!ignore) {
-          console.log("Usando dados de reserva da liga:", err)
+          console.log("Usando dados de reserva:", err)
           setLocalStandings(currentFallback)
           if (setStandings) setStandings(currentFallback)
           setIsLoading(false)
