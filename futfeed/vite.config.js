@@ -9,6 +9,11 @@ export default defineConfig({
         target: 'https://api.football-data.org/v4',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/football/, '')
+      },
+      '/api/gnews': {
+        target: 'https://gnews.io/api/v4',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/gnews/, '')
       }
     }
   }

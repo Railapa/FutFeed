@@ -5,17 +5,12 @@ const GNEWS_API_KEY = import.meta.env.VITE_GNEWS_API_KEY
 const leagueSearchTerms = {
   'Brasileirão Série A': 'Brasileirão OR "Série A"',
   'brasileirao': 'Brasileirão OR "Série A"',
-  'Brasileirão Série B': 'Brasileirão OR "Série B"',
-  'brasileirao-b': 'Brasileirão OR "Série B"',
-  'serie-b': 'Brasileirão OR "Série B"',
   'Champions League': '"Champions League"',
   'champions': '"Champions League"',
   'Premier League': '"Premier League"',
   'premier': '"Premier League"',
   'La Liga': '"La Liga"',
-  'laliga': '"La Liga"',
-  'Libertadores': '"Copa Libertadores"',
-  'libertadores': '"Copa Libertadores"'
+  'laliga': '"La Liga"'
 }
 
 const categoryQueryMap = {
@@ -65,7 +60,7 @@ export const Feed = ({ league, searchTeam }) => {
       const searchTerm = searchTeam ? ` AND ${searchTeam}` : ''
       
       const queryStr = `${leagueTerm}${categoryTerm}${searchTerm}`
-      const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(queryStr)}&lang=pt&country=br&max=10&apikey=${GNEWS_API_KEY}`
+      const url = `/api/gnews/search?q=${encodeURIComponent(queryStr)}&lang=pt&country=br&max=10&apikey=${GNEWS_API_KEY}`
 
       try {
         const res = await fetch(url)
@@ -74,7 +69,7 @@ export const Feed = ({ league, searchTeam }) => {
         const data = await res.json()
         
         if (!ignore) {
-          if (data.articles) {
+          if (data.articles && data.articles.length > 0) {
             setNews(data.articles)
           } else {
             setNews([])

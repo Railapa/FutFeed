@@ -4,9 +4,13 @@ const FOOTBALL_API_KEY = import.meta.env.VITE_FOOTBALL_DATA_API_KEY
 
 const leagueCodes = {
   'Brasileirão Série A': 'BSA',
+  'brasileirao': 'BSA',
   'Champions League': 'CL',
+  'champions': 'CL',
   'Premier League': 'PL',
-  'La Liga': 'PD'
+  'premier': 'PL',
+  'La Liga': 'PD',
+  'laliga': 'PD'
 }
 
 export const Matches = ({ league }) => {
@@ -29,11 +33,10 @@ export const Matches = ({ league }) => {
     const fetchMatches = async () => {
       setIsLoading(true)
       const code = leagueCodes[league] || 'BSA'
-      const targetUrl = `https://api.football-data.org/v4/competitions/${code}/matches`
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
+      const fetchUrl = `/api/football/competitions/${code}/matches`
 
       try {
-        const res = await fetch(proxyUrl, {
+        const res = await fetch(fetchUrl, {
           headers: { 'X-Auth-Token': FOOTBALL_API_KEY }
         })
 
@@ -61,10 +64,10 @@ export const Matches = ({ league }) => {
               matchTime: formattedTime,
               homeTeam: m.homeTeam.shortName || m.homeTeam.name,
               homeCrest: m.homeTeam.crest,
-              homeScore: m.score.fullTime.home,
+              homeScore: m.score?.fullTime?.home ?? 0,
               awayTeam: m.awayTeam.shortName || m.awayTeam.name,
               awayCrest: m.awayTeam.crest,
-              awayScore: m.score.fullTime.away,
+              awayScore: m.score?.fullTime?.away ?? 0,
               league: league
             }
           })
@@ -143,7 +146,7 @@ export const Matches = ({ league }) => {
                   </span>
                 ) : (
                   <span className="text-sm font-extrabold text-[var(--brand)] px-1 shrink-0 whitespace-nowrap">
-                    {`${m.homeScore ?? 0} - ${m.awayScore ?? 0}`}
+                    {`${m.homeScore} - ${m.awayScore}`}
                   </span>
                 )}
 
