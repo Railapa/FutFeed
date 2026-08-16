@@ -201,11 +201,6 @@ export const MyTeam = ({ standings = [], league }) => {
           </div>
         )}
       </div>
-
-      <div className="text-[10px] text-text-muted flex justify-between items-center px-1 pt-1">
-        <span>Notificações ativadas</span>
-        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-      </div>
     </div>
   )
 }

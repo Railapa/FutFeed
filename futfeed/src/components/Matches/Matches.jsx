@@ -115,7 +115,7 @@ export const Matches = ({ league }) => {
           </p>
         </div>
       ) : (
-        <div className="flex gap-3 overflow-x-auto scrollbar-none pb-1">
+        <div className="flex gap-3 overflow-x-auto custom-scrollbar pb-2 scroll-smooth">
           {matches.map(m => (
             <div
               key={m.id}
